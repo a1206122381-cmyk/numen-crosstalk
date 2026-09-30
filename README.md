@@ -32,14 +32,63 @@
 
 ---
 
+## 安装（只发 jar，前置自己下）
+
+> **本仓库不打包前置 mod。** 下面这几个请从各自的正式发布页下载 ——
+> 那样你能拿到最新版，也不会因为我的包里带了旧版本而出问题。
+
+### 目标环境
+
+| | |
+|---|---|
+| Minecraft | **1.21.1** |
+| 加载器 | **Fabric**（Loader ≥ 0.18.1） |
+| Java | **21** |
+
+### 前置（必装）
+
+| mod | 从哪拿 | 为什么需要 |
+|---|---|---|
+| **Fabric API** | [Modrinth](https://modrinth.com/mod/fabric-api) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/fabric-api) | Numen 的前置 |
+| **Numen** | [GitHub Releases](https://github.com/Dwinovo/minecraft-numen/releases) | AI 同伴本体 |
+| **numen-api** | 同上（和 Numen 一起发） | Numen 的引擎，单独一个 jar |
+
+> ⚠️ `numen` 和 `numen_api` 是**两个独立的 jar**，两个都要放。
+
+### 本仓库的 mod
+
+| jar | 必装吗 | 作用 |
+|---|---|---|
+| **`crosstalk-fabric-<版本>.jar`** | ✅ 必装 | 给同伴装上 `say` / `hear` / `who_is_here` |
+| `crosstalk-collab-<版本>.jar` | ⬜ 可选 | 加一句"话也可以对同伴说"。**它改提示词**，所以单独拆出来 |
+
+**装上后 `mods/` 应该有这些**：
+
+```
+fabric-api-<版本>.jar
+numen-fabric-1.21.1-<版本>.jar
+numen-api-fabric-1.21.1-<版本>.jar
+crosstalk-fabric-<版本>.jar          ← 本仓库
+crosstalk-collab-<版本>.jar          ← 可选
+```
+
+详细步骤见 **[配置指南](docs/配置指南.md)**。
+
+---
+
 ## 包
 
 | 包 | 语言 | 作用 |
 |---|---|---|
-| [`packages/speech-mcp`](packages/speech-mcp) | Node | **核心**。`hear` / `say` / `who_is_here` 三个 MCP 工具 |
-| [`packages/forge-handshake`](packages/forge-handshake) | Node | 让 Mineflayer 连上 **Forge** 服务器（任意整合包） |
-| [`packages/numen-resident`](packages/numen-resident) | Java | 服务端子mod：身份名册 |
-| [`packages/numen-orchestrator`](packages/numen-orchestrator) | Java | 客户端子mod：写发言流、读队列、召唤 |
+| [`packages/numen-crosstalk-fabric`](packages/numen-crosstalk-fabric) | Java | **主 mod**。游戏内工具 `say` / `hear` / `who_is_here` |
+| [`packages/numen-crosstalk-collab`](packages/numen-crosstalk-collab) | Java | 可选的提示词补充，单独拆出来 |
+| [`packages/speech-mcp`](packages/speech-mcp) | Node | MCP 服务器。同一套工具，给**任何** MCP 客户端用 |
+| [`packages/forge-handshake`](packages/forge-handshake) | Node | 让 Mineflayer 连上 **Forge** 服务器（Fabric 服不需要） |
+| [`packages/numen-resident`](packages/numen-resident) | Java | ⚠️ **1.20.1 Forge** 那条线，未验证，保留备查 |
+| [`packages/numen-orchestrator`](packages/numen-orchestrator) | Java | ⚠️ 同上 |
+
+> **1.21.1 和 1.20.1 是两套完全不同的架构**，不能混用。
+> 后者是早期实验留下的，只做参考，没在干净环境验证过。
 
 ---
 
