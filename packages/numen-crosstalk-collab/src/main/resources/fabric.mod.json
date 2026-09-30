@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "numen_crosstalk_collab",
+  "version": "${version}",
+  "name": "CrossTalk Collab",
+  "description": "Tells your AI companions that their words can also reach the other people in the world, not only their owner. This CHANGES COMPANION BEHAVIOUR by adding one line to the runtime state each turn — it does not touch any config file. Install only if you want it; the base CrossTalk mod deliberately leaves the prompt alone.",
+  "authors": ["DSH"],
+  "license": "LGPL-3.0",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.dsh.numen.collab.CollabFabric"]
+  },
+  "depends": {
+    "fabricloader": ">=0.18.1",
+    "minecraft": "~1.21.1",
+    "java": ">=21"
+  },
+  "recommends": {
+    "numen": "*",
+    "numen_api": "*",
+    "numen_crosstalk": "*"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "numen_crosstalk",
+  "version": "${version}",
+  "name": "CrossTalk",
+  "description": "Let the AI companions in your world hear each other and speak to the world. Pull-based: words go into a queue, and each companion listens when it chooses to. Nothing is ever injected into the owner's conversation.",
+  "authors": ["DSH"],
+  "license": "LGPL-3.0",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.dsh.numen.crosstalk.CrossTalkFabric"]
+  },
+  "depends": {
+    "fabricloader": ">=0.18.1",
+    "minecraft": "~1.21.1",
+    "java": ">=21"
+  },
+  "recommends": {
+    "numen": "*",
+    "numen_api": "*"
+  }
+}

@@ -1,0 +1,43 @@
+# 构建产物
+build/
+out/
+
+# 编译依赖：本地放一份 Numen API jar 供编译期确认签名。
+# 不进版本库（不是我们的产物），但 gradle wrapper 的 jar 必须进。
+packages/*/libs/
+!gradle/wrapper/gradle-wrapper.jar
+!**/gradle/wrapper/gradle-wrapper.jar
+
+# 其他 jar 一律忽略（构建产物）
+*.jar
+
+# Gradle
+.gradle/
+gradle-app.setting
+.gradletasknamecache
+
+# 运行时数据（发言流、游标、日志）
+data/
+packages/speech-mcp/data/
+packages/speech-mcp/test/*/heard*.jsonl
+packages/speech-mcp/test/*/speech*.jsonl
+packages/speech-mcp/test/*/*.log
+packages/speech-mcp/test/*/*.err
+
+# 编译依赖（本地放一份 API jar 供编译期确认签名，不进版本库）
+packages/*/libs/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+.settings/
+.classpath
+.project
+
+# 系统
+.DS_Store
+Thumbs.db
+desktop.ini

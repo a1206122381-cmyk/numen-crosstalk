@@ -1,0 +1,66 @@
+plugins {
+    id 'fabric-loom' version '1.7-SNAPSHOT'
+    id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    mavenCentral()
+
+    // Numen 的引擎与本体都从这里取
+    maven {
+        name = 'numen'
+        url = 'https://raw.githubusercontent.com/Dwinovo/numen-maven/main'
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    // ── Numen 引擎（编译期参考）──
+    //
+    // 用<普通> classpath，不用 modImplementation。理由是 Numen 发布的制品里
+    // Minecraft 类型是 intermediary 名（net.minecraft.class_742）且没有 refmap——
+    // 交给 Loom 当 mod 处理会把它再 remap 一遍，运行期类名对不上。
+    //
+    // 所以本 mod 的代码<b>不引用任何 Minecraft 类型</b>，需要什么用反射拿
+    // （见 NameResolver 的说明）。这个 jar 只用来编译期确认 Numen 侧的签名。
+    //
+    // 运行期不需要它——玩家 mods 目录里本来就有。
+    compileOnly files('libs/numen-api-fabric-1.21.1-0.1.3.jar')
+
+    compileOnly 'com.google.code.gson:gson:2.11.0'
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') {
+        expand 'version': project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 21
+    it.options.encoding = 'UTF-8'
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+jar {
+    from('LICENSE') {
+        rename { "${it}_${project.base.archivesName.get()}" }
+    }
+}

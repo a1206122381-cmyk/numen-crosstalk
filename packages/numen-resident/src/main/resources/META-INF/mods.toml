@@ -1,0 +1,41 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
+
+# 关键：本 mod 应当"装在哪一侧都行、另一侧没装也不报错"。
+# IGNORE_ALL_VERSION 让客户端/服务端版本不一致时不显示红叉。
+# 这样它可以按需只装客户端或只装服务端，不影响进服。
+displayTest="IGNORE_ALL_VERSION"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+authors="${mod_authors}"
+description='''${mod_description}'''
+
+[[dependencies.${mod_id}]]
+    modId="forge"
+    mandatory=true
+    versionRange="${forge_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+# ── Numen 是软依赖 ──
+# mandatory=false：没装 Numen 时本 mod 照常加载，只是功能不启用。
+#   这样本 mod 可以装进任意存档而不破坏它。
+# ordering=AFTER：保证 Numen 的核心初始化（NumenCore.init）先跑完，
+#   我们注册插件时公共 API 已经可用。
+[[dependencies.${mod_id}]]
+    modId="numen"
+    mandatory=false
+    versionRange="[0.1.0,)"
+    ordering="AFTER"
+    side="BOTH"
